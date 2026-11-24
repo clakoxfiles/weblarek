@@ -23,7 +23,7 @@ export const apiProducts = {
             "image": "/Asterisk_2.svg",
             "title": "Мамка-таймер",
             "category": "софт-скил",
-            "price": null
+            "price": 5600
         },
         {
             "id": "412bcf81-7e75-4e70-bdb9-d3c73c9803b7",

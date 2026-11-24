@@ -1,0 +1,41 @@
+import { IProduct } from "../../types";
+
+export class Checkout {
+  private _productsInCheckout: IProduct[] = []
+
+  get productsInCheckout() {
+    return this._productsInCheckout
+  }
+
+  // // Для отладки Set
+  // set productsInCheckout(productsArray: IProduct[]) {
+  //   this._productsInCheckout = productsArray
+  // }
+
+  addProduct (product: IProduct): void {
+    if (!this.isProductInCheckout(product.id)) this._productsInCheckout.push(product)
+  }
+
+  deleteProduct (product: IProduct): void {
+    this._productsInCheckout = this._productsInCheckout.filter(item => item.id !== product.id)
+  }
+
+  cleanAll(): void {
+    this._productsInCheckout = []
+  }
+
+  getSum(): number {
+    return this._productsInCheckout.reduce((acc, item) => {
+      if (item.price === null) return acc + 0
+      return acc + item.price
+    }, 0)
+  }
+
+  getQuantity(): number {
+    return this._productsInCheckout.length
+  }
+
+  isProductInCheckout(id: string): boolean {
+    return this._productsInCheckout.some(item => item.id === id)
+  }
+}
