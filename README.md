@@ -102,6 +102,13 @@ Presenter - презентер содержит основную логику п
 
 ### Данные
 
+### Типы
+#### Тип оплаты
+```ts
+type TPayment = 'card' | 'cash' | ''
+```
+
+### Интерфейсы
 #### Интерфейс продукта
 ```ts
 interface IProduct {
@@ -117,15 +124,24 @@ interface IProduct {
 #### Интерфейс покупателя
 ```ts
 interface IBuyer {
-  payment: TPayment ('card' | 'cash' | '')
+  payment: TPayment
   address: string
   email: string
   phone: string
 }
 ```
 
-### Модели данных
+#### Интерфейс валидации
+```ts
+interface IValidation {
+  payment?: string
+  address?: string
+  email?: string
+  phone?: string
+}
+```
 
+### Модели данных
 #### Класс "Каталог на главной странице"
   ##### Коллекции для хранения данных (Без доступа снаружи):
     - Массив товаров: Интерфейс "Товар"[]
@@ -182,12 +198,22 @@ interface IBuyer {
   ```
 
 #### Класс "Покупатель"
-  ##### Перемнные для хранения данных (Без доступа снаружи):
-    - payment: string
-    - address: string
-    - email: string
-    - phone: string
+  ##### Коллекции для хранения данных (Без доступа снаружи):
+    - Объект данных о покупателе: Интерфейс "Покупатель"
   ##### Методы
-    - Проверка данных
-    - Получение данных
-    - Сохранение данных
+    - Сохранение данных о покупателе
+    - Получение данных о покупателе
+    = Очистка данных о покупателе 
+    - Валидация данных о покупателе
+
+  ```ts
+  class Buyer {
+    private _buyerInfo: IBuyer
+
+    setBuyerInfo(fieldsToChange: Partial<IBuyer>): void // Имеет возможность перезаписывать пустые поля не затрагивая уже имеющиейся данные
+    get buyerInfo(): IBuyer
+
+    cleanData(): void
+    validateData(): IValidation // Если ошибок нет - вернет пустой объект
+  }
+  ```
