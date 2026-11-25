@@ -5,47 +5,46 @@ import { Checkout } from './components/models/checkout';
 import { Buyer } from './components/models/buyer';
 
 import { apiProducts } from './utils/data'
-import { IBuyer, IProduct } from './types';
 
-// const products = new Products()
+// IProduct
+console.log('Товары')
 
-// products.allProducts = apiProducts.items
+const products = new Products()
+products.allProducts = apiProducts.items
 
-// // console.log(products.allProducts)
-// console.log(products.getProductById("c101ab44-ed99-4a54-990d-47aa2bb4e7d9"))
+console.log('Массив товаров:', products.allProducts)
+console.log('Продукт по ID:', products.getProductById("c101ab44-ed99-4a54-990d-47aa2bb4e7d9"))
 
-// const productToDelete: IProduct = {
-//   "id": "c101ab44-ed99-4a54-990d-47aa2bb4e7d9",
-//   "description": "Лизните этот леденец, чтобы мгновенно запоминать и узнавать любой цветовой код CSS.",
-//   "image": "/Shell.svg",
-//   "title": "HEX-леденец",
-//   "category": "другое",
-//   "price": 1450
-// }
+products.inspectedProduct = apiProducts.items[0]
+console.log('Выбранный продукт:', products.inspectedProduct)
 
-// const checkout = new Checkout()
+// ICheckout
+console.log('Корзина')
 
-// checkout.productsInCheckout = apiProducts.items
-// checkout.deleteProduct(productToDelete)
-// checkout.addProduct(productToDelete)
+const checkout = new Checkout()
 
+checkout.addProduct(apiProducts.items[1])
+checkout.addProduct(apiProducts.items[2])
+checkout.addProduct(apiProducts.items[3])
+console.log('Массив продуктов в корзине:', checkout.productsInCheckout)
 
-// console.log(checkout.productsInCheckout)
-// console.log(checkout.getSum())
-// console.log(checkout.getQuantity())
-// console.log(checkout.isProductInCheckout("c101ab44-ed99-4a54-990d-47aa2bb4e7d9"))
+checkout.deleteProduct(apiProducts.items[3])
+console.log('После удаления товара:', checkout.productsInCheckout)
 
-const person: IBuyer = {
-  payment: 'cash',
-  address: 'asd',
-  email: 'qwerty@gmail.com',
-  phone: '+7999218423',
-}
+console.log('Сумма:', checkout.getSum())
+console.log('Количество товаров:', checkout.getQuantity())
 
-const buyer1 = new Buyer()
+console.log('Есть ли продукт в корзине (по ID: asd):', checkout.isProductInCheckout('asd'))
+console.log('Есть ли продукт в корзине (по ID: c101ab44-ed99-4a54-990d-47aa2bb4e7d9):', checkout.isProductInCheckout('c101ab44-ed99-4a54-990d-47aa2bb4e7d9'))
 
-buyer1.setBuyerInfo(person)
-// buyer1.setBuyerInfo({})
-// buyer1.cleanData()
-console.log(buyer1.buyerInfo)
-console.log(buyer1.validateData())
+// IBuyer
+console.log('Покупатель')
+
+const buyer = new Buyer()
+
+buyer.setBuyerInfo( { payment: 'cash', address: '123' } )
+buyer.cleanData()
+buyer.setBuyerInfo( { payment: 'card', address: '999' } )
+
+console.log('Информация о покупателе:', buyer.buyerInfo)
+console.log('Валидация:', buyer.validateData())

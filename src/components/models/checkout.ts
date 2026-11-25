@@ -7,11 +7,6 @@ export class Checkout {
     return this._productsInCheckout
   }
 
-  // // Для отладки Set
-  // set productsInCheckout(productsArray: IProduct[]) {
-  //   this._productsInCheckout = productsArray
-  // }
-
   addProduct (product: IProduct): void {
     if (!this.isProductInCheckout(product.id)) this._productsInCheckout.push(product)
   }
