@@ -1,12 +1,17 @@
 import './scss/styles.scss';
 
-import { Products } from './components/models/products';
-import { Checkout } from './components/models/checkout';
-import { Buyer } from './components/models/buyer';
+const API_URL = import.meta.env.VITE_API_ORIGIN
+
+import { Products } from './components/models/Products';
+import { Checkout } from './components/models/Checkout';
+import { Buyer } from './components/models/Buyer';
 
 import { apiProducts } from './utils/data'
+import { Api } from './components/base/Api';
+import { Communication } from './components/API/Communication';
+import { IRequest } from './types';
 
-// IProduct
+// Product
 console.log('Товары')
 
 const products = new Products()
@@ -18,7 +23,7 @@ console.log('Продукт по ID:', products.getProductById("c101ab44-ed99-4a
 products.inspectedProduct = apiProducts.items[0]
 console.log('Выбранный продукт:', products.inspectedProduct)
 
-// ICheckout
+// Checkout
 console.log('Корзина')
 
 const checkout = new Checkout()
@@ -37,7 +42,7 @@ console.log('Количество товаров:', checkout.getQuantity())
 console.log('Есть ли продукт в корзине (по ID: asd):', checkout.isProductInCheckout('asd'))
 console.log('Есть ли продукт в корзине (по ID: c101ab44-ed99-4a54-990d-47aa2bb4e7d9):', checkout.isProductInCheckout('c101ab44-ed99-4a54-990d-47aa2bb4e7d9'))
 
-// IBuyer
+// Buyer
 console.log('Покупатель')
 
 const buyer = new Buyer()
@@ -48,3 +53,34 @@ buyer.setBuyerInfo( { payment: 'card', address: '999' } )
 
 console.log('Информация о покупателе:', buyer.buyerInfo)
 console.log('Валидация:', buyer.validateData())
+
+// API
+const responce = new Api(API_URL)
+const communication = new Communication(responce)
+
+const order: IRequest = {
+  payment: "card",
+  email: "123",
+  phone: "79992198423",
+  address: "123",
+  total: 2200,
+  items: [
+    "854cef69-976d-4c2a-a18c-2aa45046c390",
+    "c101ab44-ed99-4a54-990d-47aa2bb4e7d9"
+  ]
+}
+
+console.log('GET', await communication.getData())
+
+const productListTest = new Products()
+const productsFromApi = await communication.getData()
+
+productListTest.allProducts = productsFromApi.items
+console.log('API Product List', productListTest.allProducts)
+
+try {
+  const result = await communication.postData(order)
+  console.log(result)
+} catch(error) {
+  console.error(error)
+}

@@ -29,3 +29,18 @@ export interface IValidation {
     email?: string
     phone?: string
 }
+
+export interface IProductList {
+    total: number
+    items: IProduct[]
+}
+
+export interface IRequest extends IBuyer {
+    total: number
+    items: string[]
+}
+
+export interface ISuccess {
+    id: string
+    total: number
+}
