@@ -243,22 +243,22 @@ interface ISuccess {
   ```
 
 ### Слой коммуникации
-  #### Класс "Запрос и отправка на сервер"
-    ##### Конструктор (Внешние данные): 
-      - Объект соответсвующий интерфейсу `IApi`
-    ##### Методы
-      - Запрос объекта с количество продуктов и всеми продуктами с сервера
-      - Отправка данных о заказе
-    ```ts
-    class Communication {
-      private api: IApi
-      
-      constructor(api: IApi) {
-        this.api = api
-      }
-
-      getData(): Promise<IProductList>
-      postData(order: IRequest): Promise<ISuccess>
-    }
-    ```
+#### Класс "Запрос и отправка на сервер"
+  ##### Конструктор (Внешние данные): 
+    - Объект соответсвующий интерфейсу `IApi`
+  ##### Методы
+    - Запрос объекта с количество продуктов и всеми продуктами с сервера
+    - Отправка данных о заказе
+  ```ts
+  class Communication {
+    private api: IApi
     
+    constructor(api: IApi) {
+      this.api = api
+    }
+
+    getData(): Promise<IProductList>
+    postData(order: IRequest): Promise<ISuccess>
+  }
+  ```
+  
