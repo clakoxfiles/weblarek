@@ -141,6 +141,30 @@ interface IValidation {
 }
 ```
 
+##### Интерфейс продуктов с сервера
+```ts
+interface IProductList {
+  total: number
+  items: IProduct[]
+}
+```
+
+##### Интерфейс запроса на сервер
+```ts
+interface IRequest extends IBuyer {
+  total: number
+  items: string[]
+}
+```
+
+##### Интерфейс успешной отправки заказа на сервер
+```ts
+interface ISuccess {
+    id: string
+    total: number
+}
+```
+
 ### Модели данных
 #### Класс "Каталог на главной странице"
   ##### Коллекции для хранения данных (Без доступа снаружи):
@@ -203,14 +227,14 @@ interface IValidation {
   ##### Методы
     - Сохранение данных о покупателе
     - Получение данных о покупателе
-    = Очистка данных о покупателе 
+    - Очистка данных о покупателе 
     - Валидация данных о покупателе
 
   ```ts
   class Buyer {
     private _buyerInfo: IBuyer
 
-    setBuyerInfo(fieldsToChange: Partial<IBuyer>): void // Имеет возможность перезаписывать пустые поля не затрагивая уже имеющиейся данные
+    setBuyerInfo(fieldsToChange: Partial<IBuyer>): void // Имеет возможность перезаписывать любые поля не затрагивая уже имеющиейся данные
     get buyerInfo(): IBuyer
 
     cleanData(): void
@@ -221,7 +245,20 @@ interface IValidation {
 ### Слой коммуникации
   #### Класс "Запрос и отправка на сервер"
     ##### Конструктор (Внешние данные): 
-      - Объект соответсвующий интерфейсу IApi
+      - Объект соответсвующий интерфейсу `IApi`
     ##### Методы
-      - GET
-      - POST
+      - Запрос объекта с количество продуктов и всеми продуктами с сервера
+      - Отправка данных о заказе
+    ```ts
+    class Communication {
+      private api: IApi
+      
+      constructor(api: IApi) {
+        this.api = api
+      }
+
+      getData(): Promise<IProductList>
+      postData(order: IRequest): Promise<ISuccess>
+    }
+    ```
+    

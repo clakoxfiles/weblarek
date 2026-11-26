@@ -55,8 +55,8 @@ console.log('Информация о покупателе:', buyer.buyerInfo)
 console.log('Валидация:', buyer.validateData())
 
 // API
-const responce = new Api(API_URL)
-const communication = new Communication(responce)
+const api = new Api(API_URL)
+const communication = new Communication(api)
 
 const order: IRequest = {
   payment: "card",
