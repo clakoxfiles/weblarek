@@ -3,12 +3,12 @@ import { IProduct } from "../../types";
 export class Checkout {
   private _productsInCheckout: IProduct[] = []
 
-  get productsInCheckout() {
+  get productsInCheckout(): IProduct[] {
     return this._productsInCheckout
   }
 
   addProduct (product: IProduct): void {
-    if (!this.isProductInCheckout(product.id)) this._productsInCheckout.push(product)
+    this._productsInCheckout.push(product)
   }
 
   deleteProduct (product: IProduct): void {

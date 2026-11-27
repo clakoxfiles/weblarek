@@ -8,7 +8,7 @@ export class Products {
     this._allProducts = productsArray
   }
 
-  get allProducts() {
+  get allProducts(): IProduct[] {
     return this._allProducts
   }
 
@@ -16,12 +16,12 @@ export class Products {
     this._inspectedProduct = product
   }
 
-  get inspectedProduct() {
+  get inspectedProduct(): IProduct | null {
     return this._inspectedProduct
   }
 
-  getProductById(id: string): IProduct | null {
-    const product = this.allProducts.find(item => item.id === id) ?? null
+  getProductById(id: string): IProduct | undefined {
+    const product = this.allProducts.find(item => item.id === id)
     return product
   }
 }

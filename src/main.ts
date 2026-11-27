@@ -9,7 +9,7 @@ import { Buyer } from './components/models/Buyer';
 import { apiProducts } from './utils/data'
 import { Api } from './components/base/Api';
 import { Communication } from './components/API/Communication';
-import { IRequest } from './types';
+import { IOrderRequest } from './types';
 
 // Product
 console.log('Товары')
@@ -58,7 +58,7 @@ console.log('Валидация:', buyer.validateData())
 const api = new Api(API_URL)
 const communication = new Communication(api)
 
-const order: IRequest = {
+const order: IOrderRequest = {
   payment: "card",
   email: "123",
   phone: "79992198423",
@@ -72,15 +72,19 @@ const order: IRequest = {
 
 console.log('GET', await communication.getData())
 
-const productListTest = new Products()
-const productsFromApi = await communication.getData()
+communication.getData()
+  .then(responce => {
+    products.allProducts = responce.items
+    console.log('API Product List', products.allProducts)
+  })
+  .catch(error => {
+    console.error('Ошибка при получении товаров с сервера:', error)
+  })
 
-productListTest.allProducts = productsFromApi.items
-console.log('API Product List', productListTest.allProducts)
 
 try {
   const result = await communication.postData(order)
-  console.log(result)
+  console.log('Заказ создан и отправлен на сервер:', result)
 } catch(error) {
-  console.error(error)
+  console.error('Ошибка при отправке созданного заказа на сервер', error)
 }

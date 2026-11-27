@@ -1,4 +1,4 @@
-import { IApi, IRequest, ISuccess, IProductList } from "../../types"
+import { IApi, IOrderRequest, IOrderSuccess, IProductList } from "../../types"
 
 export class Communication {
   private api: IApi
@@ -11,7 +11,7 @@ export class Communication {
     return this.api.get('/product/')
   }
 
-  postData(order: IRequest): Promise<ISuccess> {
+  postData(order: IOrderRequest): Promise<IOrderSuccess> {
     return this.api.post('/order/', order)
   }
 }

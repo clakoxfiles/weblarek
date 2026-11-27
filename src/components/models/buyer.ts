@@ -1,4 +1,4 @@
-import { IBuyer, IValidation } from "../../types"
+import { IBuyer, ValidationErrors } from "../../types"
 
 export class Buyer {
   private _buyerInfo: IBuyer = this.getCleanTemplate()
@@ -24,8 +24,8 @@ export class Buyer {
     this._buyerInfo = this.getCleanTemplate()
   }
 
-  validateData(): IValidation {
-    const errors: IValidation = {}
+  validateData(): ValidationErrors {
+    const errors: ValidationErrors = {}
 
     if (this._buyerInfo.payment === '') errors.payment = 'Не выбран тип оплаты'
     if (this._buyerInfo.phone.trim() === '') errors.phone = 'Укажите номер телефона'

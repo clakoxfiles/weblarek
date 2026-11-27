@@ -108,6 +108,12 @@ Presenter - презентер содержит основную логику п
 type TPayment = 'card' | 'cash' | ''
 ```
 
+##### Тип валидации
+Берет ключи и типы значений из интерфейса IBuyer, но делает их необязательными
+```ts
+type ValidationErrors = Partial<Record<keyof IBuyer, string>>
+```
+
 #### Интерфейсы
 ##### Интерфейс продукта
 ```ts
@@ -131,16 +137,6 @@ interface IBuyer {
 }
 ```
 
-##### Интерфейс валидации
-```ts
-interface IValidation {
-  payment?: string
-  address?: string
-  email?: string
-  phone?: string
-}
-```
-
 ##### Интерфейс продуктов с сервера
 ```ts
 interface IProductList {
@@ -151,7 +147,7 @@ interface IProductList {
 
 ##### Интерфейс запроса на сервер
 ```ts
-interface IRequest extends IBuyer {
+interface IOrderRequest extends IBuyer {
   total: number
   items: string[]
 }
@@ -159,7 +155,7 @@ interface IRequest extends IBuyer {
 
 ##### Интерфейс успешной отправки заказа на сервер
 ```ts
-interface ISuccess {
+interface IOrderSuccess {
     id: string
     total: number
 }
@@ -188,7 +184,7 @@ interface ISuccess {
     get allProducts(): IProduct[]
     get inspectedProduct(): IProduct | null
 
-    getProductById(id: string): IProduct | null
+    getProductById(id: string): IProduct | undefined
   }
   ```
 
@@ -238,7 +234,7 @@ interface ISuccess {
     get buyerInfo(): IBuyer
 
     cleanData(): void
-    validateData(): IValidation // Если ошибок нет - вернет пустой объект
+    validateData(): ValidationErrors // Если ошибок нет - вернет пустой объект
   }
   ```
 
@@ -258,7 +254,7 @@ interface ISuccess {
     }
 
     getData(): Promise<IProductList>
-    postData(order: IRequest): Promise<ISuccess>
+    postData(order: IOrderRequest): Promise<IOrderSuccess>
   }
   ```
   
